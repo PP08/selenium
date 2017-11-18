@@ -25,8 +25,6 @@ class ResponseURL():
         self.responseURLs = []
     def getResponseURL(self):
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        # browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
-        # time.sleep(5)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
                                     if( XMLHttpRequest.callbacks ) { \
@@ -71,6 +69,7 @@ class Worker(threading.Thread):
         self.listResponseURl = []
     def run(self):
         for el in self.listCategory:
+            print(el)
             responseURL = ResponseURL(el)
             responseURL.getResponseURLMultiplePage()
             self.listResponseURl.append(responseURL.responseURLs)
@@ -100,16 +99,3 @@ if __name__ == '__main__':
     data = json.dumps(data)
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
-
-
-# myclass = ResponseURL('http://kenh14.vn/star.chn')
-# myclass.getResponseURLMultiplePage()
-# print(myclass.responseURLs)
-# data = []
-# category = getCategory('category.txt')
-# for i in range(3):
-#     responseURL = ResponseURL(category[i])
-#     responseURL.getResponseURLMultiplePage()
-#     data.append(responseURL.responseURLs)
-#
-# print(data)
