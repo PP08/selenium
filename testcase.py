@@ -95,7 +95,7 @@ def scheduleThread(numThreads):
     return data
 
 if __name__ == '__main__':
-    data = scheduleThread(2)
+    data = scheduleThread(16)
     data = sum(data, [])
     data = json.dumps(data)
     with open('data.json', 'w') as outfile:
