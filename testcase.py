@@ -23,10 +23,11 @@ class ResponseURL():
         self.chrome_options.add_argument('no-sandbox')
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
         self.browser.get(url)
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(20)
         self.responseURLs = []
     def getResponseURL(self):
         # self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        self.browser.implicitly_wait(20)
         self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
@@ -44,7 +45,7 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 5000);}) \
                                 ')
         time.sleep(5)
         logs = self.browser.get_log('browser')
@@ -58,13 +59,13 @@ class ResponseURL():
         return responseURL
 
     def getResponseURLMultiplePage(self):
-        self.browser.implicitly_wait(15)
+        # self.browser.implicitly_wait(20)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(15)
+        # self.browser.implicitly_wait(20)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(15)
+        # self.browser.implicitly_wait(20)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(15)
+        # self.browser.implicitly_wait(20)
         self.browser.quit()
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
@@ -107,8 +108,9 @@ if __name__ == '__main__':
     data = json.dumps(data)
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
-    with open('data.json', 'r+') as outfile:
-        content = outfile.read().replace('\\','')
-        content = content[1:-2]
+        outfile.close()
+    with open('data.json', 'w') as outfile:
+        content = outfile.read().replace('\\', '')
+        content = content[1:-1]
         outfile.write(content)
         outfile.close()
