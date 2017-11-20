@@ -101,13 +101,13 @@ def scheduleThread(numThreads):
     return data
 
 if __name__ == '__main__':
-    data = scheduleThread(8)
+    data = scheduleThread(16)
     data = sum(data, [])
     data = json.dumps(data)
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
-        content = outfile.read().replace('\\', '')
+    with open('data.json', 'r+') as outfile:
+        content = outfile.read().replace('\\','')
         content = content[1:-2]
         outfile.write(content)
         outfile.close()
-
