@@ -19,8 +19,8 @@ class ResponseURL():
         self.chrome_options = Options()
         self.prefs = {"profile.managed_default_content_settings.images": 2}
         self.chrome_options.add_experimental_option("prefs", self.prefs)
-        self.chrome_options.add_argument("--headless")
-        self.chrome_options.add_argument('no-sandbox')
+        # self.chrome_options.add_argument("--headless")
+        # self.chrome_options.add_argument('no-sandbox')
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
         self.browser.get(url)
         self.responseURLs = []
@@ -43,10 +43,10 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 5000);}) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
-        time.sleep(5)
+        time.sleep(8)
         logs = self.browser.get_log('browser')
         # print(logs)
         responseURL = []
@@ -64,11 +64,10 @@ class ResponseURL():
         self.responseURLs.append(self.getResponseURL())
         self.browser.implicitly_wait(20)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(20)
-        time.sleep(10)
-        self.browser.quit()
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
+        time.sleep(15)
+        self.browser.quit()
 
 class Worker(threading.Thread):
     def __init__(self, threadID, listCategory):
@@ -100,6 +99,7 @@ def scheduleThread(numThreads):
         thread.join()
     for thread in listThreads:
         data.append(thread.listResponseURl)
+    print("*here*")
     return data
 
 if __name__ == '__main__':
