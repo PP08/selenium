@@ -65,7 +65,7 @@ class ResponseURL():
         self.browser.implicitly_wait(10)
         self.responseURLs.append(self.getResponseURL())
         self.browser.implicitly_wait(10)
-        time.sleep(5)
+        time.sleep(10)
         self.browser.quit()
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
