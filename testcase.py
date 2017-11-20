@@ -24,7 +24,7 @@ class ResponseURL():
         self.browser.get(url)
         self.responseURLs = []
     def getResponseURL(self):
-        time.sleep(10)
+        # time.sleep(2)
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
@@ -42,10 +42,10 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 5000) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 2000) \
                                 }) \
                                 ')
-        time.sleep(10)
+        time.sleep(4)
         logs = self.browser.get_log('browser')
         responseURL = []
         indicators = ["laytinmoitronglist", "trang-", "loadListNews", "page-"]
