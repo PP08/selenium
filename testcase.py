@@ -19,8 +19,8 @@ class ResponseURL():
         self.chrome_options = Options()
         self.prefs = {"profile.managed_default_content_settings.images": 2}
         self.chrome_options.add_experimental_option("prefs", self.prefs)
-        # self.chrome_options.add_argument("--headless")
-        # self.chrome_options.add_argument('no-sandbox')
+        self.chrome_options.add_argument("--headless")
+        self.chrome_options.add_argument('no-sandbox')
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
         self.browser.get(url)
         self.responseURLs = []
