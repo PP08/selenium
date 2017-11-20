@@ -23,11 +23,11 @@ class ResponseURL():
         self.chrome_options.add_argument('no-sandbox')
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
         self.browser.get(url)
-        self.browser.implicitly_wait(20)
+        self.browser.implicitly_wait(10)
         self.responseURLs = []
     def getResponseURL(self):
         # self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        self.browser.implicitly_wait(20)
+        self.browser.implicitly_wait(10)
         self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
