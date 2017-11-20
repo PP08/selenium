@@ -48,7 +48,7 @@ class ResponseURL():
                                 ')
         time.sleep(5)
         logs = self.browser.get_log('browser')
-        print(logs)
+        # print(logs)
         responseURL = []
         indicators = ["laytinmoitronglist", "trang-", "loadListNews", "page-"]
         for el in logs:
