@@ -82,7 +82,7 @@ class Worker(threading.Thread):
             self.listResponseURl.append(responseURL.responseURLs)
 
 def scheduleThread(numThreads):
-    category = getCategory('category.txt')
+    category = getCategory('testspecial.txt')
     numElements = len(category) // numThreads
     listThreads = []
     data = []
@@ -101,8 +101,9 @@ def scheduleThread(numThreads):
     return data
 
 if __name__ == '__main__':
-    data = scheduleThread(16)
+    data = scheduleThread(1)
     data = sum(data, [])
     data = json.dumps(data)
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile)
+    # with open('data.json', 'w') as outfile:
+    #     json.dump(data, outfile)
+    print(data)

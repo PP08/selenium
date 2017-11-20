@@ -11,23 +11,26 @@ def getCategory(file_path):
     return content
 
 class ResponseURL():
-    def __init__(self, url, action):
+    def __init__(self, url, element_id):
         self.url = url
         self.desired = DesiredCapabilities.CHROME
         self.desired['loggingPrefs'] = {'browser': 'INFO'}
         self.chrome_options = Options()
         prefs = {"profile.managed_default_content_settings.images": 2}
         self.chrome_options.add_experimental_option("prefs", prefs)
-        self.chrome_options.add_argument("--headless")
-        self.chrome_options.add_argument('no-sandbox')
+        # self.chrome_options.add_argument("--headless")
+        # self.chrome_options.add_argument('no-sandbox')
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
         self.browser.get(url)
         self.responseURLs = []
-        self.action = action
+        self.element_id = element_id
+
     def getResponseURL(self):
         # time.sleep(10)
-        # self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        self.browser.execute_script(self.action)
+        self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        # self.browser.execute_script(self.action)
+        self.browser.find_element_by_id(self.element_id).click()
+        time.sleep(5)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
                                     if( XMLHttpRequest.callbacks ) { \
@@ -50,7 +53,7 @@ class ResponseURL():
         time.sleep(4)
         logs = self.browser.get_log('browser')
         responseURL = []
-        indicators = ["laytinmoitronglist", "trang-", "loadListNews", "page-"]
+        indicators = ["GetNewsUpdated"]
         for el in logs:
             if any(x in el["message"] for x in indicators):
                 url = el["message"].split("\"")[1]
@@ -61,7 +64,7 @@ class ResponseURL():
         self.responseURLs.append(self.getResponseURL())
         self.responseURLs.append(self.getResponseURL())
         self.responseURLs.append(self.getResponseURL())
-        self.browser.quit()
+        # self.browser.quit()
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
 
@@ -75,8 +78,8 @@ class Worker(threading.Thread):
         for el in self.listCategory:
             print(el)
             # TODO: defind action
-            action = "window.scrollTo(0, document.body.scrollHeight);"
-            responseURL = ResponseURL(url=el, action=action)
+            # action = "window.scrollTo(0, document.body.scrollHeight);"
+            responseURL = ResponseURL(url=el, element_id='getGetNewsUpdated')
             responseURL.getResponseURLMultiplePage()
             self.listResponseURl.append(responseURL.responseURLs)
 
