@@ -63,6 +63,7 @@ class ResponseURL():
         self.responseURLs.append(self.getResponseURL())
         self.browser.implicitly_wait(10)
         self.responseURLs.append(self.getResponseURL())
+        self.browser.implicitly_wait(10)
         self.browser.quit()
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
@@ -107,7 +108,7 @@ if __name__ == '__main__':
         json.dump(data, outfile)
         outfile.close()
     temp = open('temp.json', 'r').read()
-    with open('data.json', 'r+') as outfile:
+    with open('data.json', 'w') as outfile:
         content = temp.replace('\\', '')
         content = content[1:-1]
         outfile.write(content)
