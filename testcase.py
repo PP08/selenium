@@ -58,13 +58,13 @@ class ResponseURL():
         return responseURL
 
     def getResponseURLMultiplePage(self):
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(20)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(20)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(20)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(20)
         time.sleep(10)
         self.browser.quit()
         self.responseURLs = sum(self.responseURLs, [])
