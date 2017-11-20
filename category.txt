@@ -143,6 +143,7 @@ http://cafef.vn/hang-hoa-nguyen-lieu/nong-thuy-san.chn
 http://cafef.vn/hang-hoa-nguyen-lieu/kim-loai.chn
 http://cafef.vn/hang-hoa-nguyen-lieu/vat-lieu-xay-dung.chn
 http://cafef.vn/hang-hoa-nguyen-lieu/hang-tieu-dung.chn
+http://cafebiz.vn/
 http://cafebiz.vn/thoi-su.chn
 http://cafebiz.vn/thoi-su.rss
 http://cafebiz.vn/tin-tuc.chn
@@ -190,6 +191,7 @@ http://cafebiz.vn/videos.rss
 http://cafebiz.vn/danh-sach-chu-de.chn
 http://cafebiz.vn/danh-sach-chu-de.rss
 http://cafebiz.vn/gui-tin-nhanh.chn
+http://genk.vn/
 http://genk.vn/tin-moi.chn
 http://genk.vn/tin-moi.rss
 http://genk.vn/mobile.chn
