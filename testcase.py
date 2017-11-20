@@ -48,7 +48,7 @@ class ResponseURL():
         logs = self.browser.get_log('browser')
         responseURL = []
         for el in logs:
-            if "laytinmoitronglist" in el["message"]:
+            if any(["laytinmoitronglist", "trang-", "loadListNews"]) in el["message"]:
                 url = el["message"].split("\"")[1]
                 responseURL.append(url)
         return responseURL
