@@ -11,7 +11,7 @@ def getCategory(file_path):
     return content
 
 class ResponseURL():
-    def __init__(self, url):
+    def __init__(self, url, action):
         self.url = url
         self.desired = DesiredCapabilities.CHROME
         self.desired['loggingPrefs'] = {'browser': 'INFO'}
@@ -23,9 +23,11 @@ class ResponseURL():
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
         self.browser.get(url)
         self.responseURLs = []
+        self.action = action
     def getResponseURL(self):
         time.sleep(10)
-        self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        # self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        self.browser.execute_script(self.action)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
                                     if( XMLHttpRequest.callbacks ) { \
@@ -72,12 +74,14 @@ class Worker(threading.Thread):
     def run(self):
         for el in self.listCategory:
             print(el)
-            responseURL = ResponseURL(el)
+            # TODO: defind action
+            action = "window.scrollTo(0, document.body.scrollHeight);"
+            responseURL = ResponseURL(url=el, action=action)
             responseURL.getResponseURLMultiplePage()
             self.listResponseURl.append(responseURL.responseURLs)
 
 def scheduleThread(numThreads):
-    category = getCategory('category.txt')
+    category = getCategory('cattest.txt')
     numElements = len(category) // numThreads
     listThreads = []
     data = []
@@ -99,5 +103,6 @@ if __name__ == '__main__':
     data = scheduleThread(16)
     data = sum(data, [])
     data = json.dumps(data)
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile)
+    # with open('data.json', 'w') as outfile:
+    #     json.dump(data, outfile)
+    print(data)
