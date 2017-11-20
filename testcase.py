@@ -109,7 +109,7 @@ if __name__ == '__main__':
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
         outfile.close()
-    with open('data.json', 'w') as outfile:
+    with open('data.json', 'r+') as outfile:
         content = outfile.read().replace('\\', '')
         content = content[1:-1]
         outfile.write(content)
