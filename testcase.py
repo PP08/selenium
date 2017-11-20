@@ -43,10 +43,10 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 5000);}) \
                                 ')
-        self.browser.implicitly_wait(10)
-        time.sleep(5)
+        self.browser.implicitly_wait(30)
+        # time.sleep(5)
         logs = self.browser.get_log('browser')
         # print(logs)
         responseURL = []
@@ -58,13 +58,13 @@ class ResponseURL():
         return responseURL
 
     def getResponseURLMultiplePage(self):
-        self.browser.implicitly_wait(20)
+        self.browser.implicitly_wait(30)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(20)
+        self.browser.implicitly_wait(30)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(20)
+        self.browser.implicitly_wait(30)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(20)
+        self.browser.implicitly_wait(30)
         self.browser.quit()
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
