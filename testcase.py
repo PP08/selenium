@@ -27,6 +27,7 @@ class ResponseURL():
         self.responseURLs = []
     def getResponseURL(self):
         # self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(5)
         self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
@@ -47,7 +48,7 @@ class ResponseURL():
                                     setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
-        time.sleep(8)
+        time.sleep(2)
         logs = self.browser.get_log('browser')
         # print(logs)
         responseURL = []
@@ -59,11 +60,11 @@ class ResponseURL():
         return responseURL
 
     def getResponseURLMultiplePage(self):
-        self.browser.implicitly_wait(30)
+        # self.browser.implicitly_wait(30)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(30)
+        # self.browser.implicitly_wait(30)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(30)
+        # self.browser.implicitly_wait(30)
         self.responseURLs.append(self.getResponseURL())
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
