@@ -49,23 +49,18 @@ class ResponseURL():
                                 ')
         # self.browser.implicitly_wait(30)
         time.sleep(5)
+    def getResponseURLMultiplePage(self, times):
+        for t in range(times):
+            self.getResponseURL()
         logs = self.browser.get_log('browser')
-        # print(logs)
         responseURL = []
         indicators = ["laytinmoitronglist", "trang-", "loadListNews", "page-"]
         for el in logs:
             if any(x in el["message"] for x in indicators):
                 url = el["message"].split("\"")[1]
                 responseURL.append(url)
-        return responseURL
 
-    def getResponseURLMultiplePage(self, times):
-        tempResponse = []
-        for t in range(times):
-            tempResponse.append(self.getResponseURL())
-            time.sleep(3)
-        tempResponse = sum(tempResponse, [])
-        self.responseURLs = {self.url: list(set(tempResponse))}
+        self.responseURLs = {self.url: list(set(responseURL))}
         self.browser.quit()
         # # self.browser.implicitly_wait(30)
         #
