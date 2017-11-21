@@ -22,6 +22,7 @@ class ResponseURL():
         self.chrome_options.add_argument("--headless")
         self.chrome_options.add_argument('no-sandbox')
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
+        self.browser.implicitly_wait(30)
         self.browser.get(url)
         self.responseURLs = []
     def getResponseURL(self):
@@ -46,7 +47,7 @@ class ResponseURL():
                                     setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
-        time.sleep(8)
+        time.sleep(5)
         logs = self.browser.get_log('browser')
         # print(logs)
         responseURL = []
@@ -66,7 +67,7 @@ class ResponseURL():
         self.responseURLs.append(self.getResponseURL())
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
-        time.sleep(10)
+        time.sleep(5)
         self.browser.quit()
 
 class Worker(threading.Thread):
@@ -103,7 +104,7 @@ def scheduleThread(numThreads):
     return data
 
 if __name__ == '__main__':
-    data = scheduleThread(1)
+    data = scheduleThread(16)
     data = sum(data, [])
     data = json.dumps(data)
     with open('temp.json', 'w') as outfile:
