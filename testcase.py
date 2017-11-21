@@ -45,10 +45,10 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 10000);}) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 3000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
-        time.sleep(10)
+        time.sleep(6)
     def getResponseURLMultiplePage(self, times):
         for t in range(times):
             self.getResponseURL()
@@ -61,6 +61,7 @@ class ResponseURL():
                 responseURL.append(url)
 
         self.responseURLs = {self.url: list(set(responseURL))}
+        time.sleep(5)
         self.browser.quit()
 
 class Worker(threading.Thread):
