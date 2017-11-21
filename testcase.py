@@ -22,12 +22,12 @@ class ResponseURL():
         self.chrome_options.add_argument("--headless")
         self.chrome_options.add_argument('no-sandbox')
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
-        self.browser.implicitly_wait(30)
+        self.browser.implicitly_wait(10)
         self.browser.get(url)
         self.responseURLs = []
     def getResponseURL(self):
+        self.browser.implicitly_wait(10)
         # self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(10)
         self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
@@ -48,7 +48,7 @@ class ResponseURL():
                                     setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
-        time.sleep(10)
+        time.sleep(5)
         logs = self.browser.get_log('browser')
         # print(logs)
         responseURL = []
@@ -59,16 +59,23 @@ class ResponseURL():
                 responseURL.append(url)
         return responseURL
 
-    def getResponseURLMultiplePage(self):
-        # self.browser.implicitly_wait(30)
-        self.responseURLs.append(self.getResponseURL())
-        # self.browser.implicitly_wait(30)
-        self.responseURLs.append(self.getResponseURL())
-        # self.browser.implicitly_wait(30)
-        self.responseURLs.append(self.getResponseURL())
-        self.responseURLs = sum(self.responseURLs, [])
-        self.responseURLs = {self.url: list(set(self.responseURLs))}
-        time.sleep(15)
+    def getResponseURLMultiplePage(self, times):
+        tempResponse = []
+        for t in range(times):
+            tempResponse.append(self.getResponseURL())
+            time.sleep(3)
+        tempResponse = sum(tempResponse, [])
+        self.responseURLs = {self.url: list(set(tempResponse))}
+        self.browser.quit()
+        # # self.browser.implicitly_wait(30)
+        #
+        # # self.browser.implicitly_wait(30)
+        # self.responseURLs.append(self.getResponseURL())
+        # # self.browser.implicitly_wait(30)
+        # self.responseURLs.append(self.getResponseURL())
+        # self.responseURLs = sum(self.responseURLs, [])
+        # self.responseURLs = {self.url: list(set(self.responseURLs))}
+        # time.sleep(5)
         # self.browser.quit()
 
 class Worker(threading.Thread):
@@ -81,7 +88,7 @@ class Worker(threading.Thread):
         for el in self.listCategory:
             print(el)
             responseURL = ResponseURL(el)
-            responseURL.getResponseURLMultiplePage()
+            responseURL.getResponseURLMultiplePage(3)
             self.listResponseURl.append(responseURL.responseURLs)
 
 def scheduleThread(numThreads):
