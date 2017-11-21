@@ -45,7 +45,7 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 5000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
         time.sleep(10)
