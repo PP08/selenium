@@ -27,8 +27,8 @@ class ResponseURL():
         self.responseURLs = []
     def getResponseURL(self):
         self.browser.implicitly_wait(10)
-        # self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
+        self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        # self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
                                     if( XMLHttpRequest.callbacks ) { \
@@ -48,7 +48,7 @@ class ResponseURL():
                                     setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
-        time.sleep(5)
+        time.sleep(10)
     def getResponseURLMultiplePage(self, times):
         for t in range(times):
             self.getResponseURL()
