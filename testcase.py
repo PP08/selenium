@@ -27,7 +27,7 @@ class ResponseURL():
         self.responseURLs = []
     def getResponseURL(self):
         # self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(3)
+        time.sleep(5)
         self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
                                     var oldSend, i; \
@@ -45,7 +45,7 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 5000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
         time.sleep(5)
@@ -68,7 +68,7 @@ class ResponseURL():
         self.responseURLs.append(self.getResponseURL())
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
-        time.sleep(10)
+        time.sleep(5)
         self.browser.quit()
 
 class Worker(threading.Thread):
