@@ -45,7 +45,7 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 5000);}) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
         time.sleep(5)
@@ -64,12 +64,12 @@ class ResponseURL():
         self.responseURLs.append(self.getResponseURL())
         # self.browser.implicitly_wait(30)
         self.responseURLs.append(self.getResponseURL())
-        self.browser.implicitly_wait(30)
+        # self.browser.implicitly_wait(30)
         self.responseURLs.append(self.getResponseURL())
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
-        time.sleep(5)
-        self.browser.quit()
+        # time.sleep(5)
+        # self.browser.quit()
 
 class Worker(threading.Thread):
     def __init__(self, threadID, listCategory):
