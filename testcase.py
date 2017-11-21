@@ -22,11 +22,11 @@ class ResponseURL():
         self.chrome_options.add_argument("--headless")
         self.chrome_options.add_argument('no-sandbox')
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options, desired_capabilities=self.desired)
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(30)
         self.browser.get(url)
         self.responseURLs = []
     def getResponseURL(self):
-        self.browser.implicitly_wait(10)
+        self.browser.implicitly_wait(30)
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         # self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
         self.browser.execute_script('function addXMLRequestCallback(callback){ \
@@ -45,7 +45,7 @@ class ResponseURL():
                                     } \
                                 } \
                                 addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 5000);}) \
+                                    setTimeout(function(){console.info(xhr.responseURL)}, 10000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
         time.sleep(10)
@@ -62,16 +62,6 @@ class ResponseURL():
 
         self.responseURLs = {self.url: list(set(responseURL))}
         self.browser.quit()
-        # # self.browser.implicitly_wait(30)
-        #
-        # # self.browser.implicitly_wait(30)
-        # self.responseURLs.append(self.getResponseURL())
-        # # self.browser.implicitly_wait(30)
-        # self.responseURLs.append(self.getResponseURL())
-        # self.responseURLs = sum(self.responseURLs, [])
-        # self.responseURLs = {self.url: list(set(self.responseURLs))}
-        # time.sleep(5)
-        # self.browser.quit()
 
 class Worker(threading.Thread):
     def __init__(self, threadID, listCategory):
@@ -107,7 +97,7 @@ def scheduleThread(numThreads):
     return data
 
 if __name__ == '__main__':
-    data = scheduleThread(4)
+    data = scheduleThread(8)
     data = sum(data, [])
     data = json.dumps(data)
     with open('temp.json', 'w') as outfile:
