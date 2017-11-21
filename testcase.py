@@ -47,7 +47,7 @@ class ResponseURL():
                                     setTimeout(function(){console.info(xhr.responseURL)}, 2000);}) \
                                 ')
         # self.browser.implicitly_wait(30)
-        time.sleep(5)
+        time.sleep(8)
         logs = self.browser.get_log('browser')
         # print(logs)
         responseURL = []
@@ -67,7 +67,7 @@ class ResponseURL():
         self.responseURLs.append(self.getResponseURL())
         self.responseURLs = sum(self.responseURLs, [])
         self.responseURLs = {self.url: list(set(self.responseURLs))}
-        time.sleep(5)
+        time.sleep(10)
         self.browser.quit()
 
 class Worker(threading.Thread):
