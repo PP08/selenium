@@ -66,7 +66,7 @@ class ResponseURL():
                 responseURL.append(url)
 
         self.responseURLs = {self.url: list(set(responseURL))}
-        time.sleep(5)
+        # time.sleep(5)
         self.browser.quit()
 
 class Worker(threading.Thread):
