@@ -1,19 +1,15 @@
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.common.keys import Keys
 import time
 from selenium.webdriver.chrome.options import Options
 import threading
 import json
-def getCategory(file_path):
-    file = open(file_path, 'r')
-    content = file.readlines()
-    content = [line.replace('\n', '') for line in content]
-    return content
+import re
 
 class ResponseURL():
     def __init__(self, url):
         self.url = url
+        self.domain = re.search(r'(http|https):\/\/(.*?)/', url).group(0)[:-1]
         self.desired = DesiredCapabilities.CHROME
         self.desired['loggingPrefs'] = {'browser': 'ALL'}
         self.chrome_options = Options()
@@ -31,28 +27,6 @@ class ResponseURL():
                                   console.info(settings.url) \
                                 });')
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        # self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
-
-        # self.browser.execute_script('function addXMLRequestCallback(callback){ \
-        #                             var oldSend, i; \
-        #                             if( XMLHttpRequest.callbacks ) { \
-        #                                 XMLHttpRequest.callbacks.push( callback ); \
-        #                             } \
-        #                             else { \
-        #                                 XMLHttpRequest.callbacks = [callback]; \
-        #                                 oldSend = XMLHttpRequest.prototype.send; \
-        #                                 XMLHttpRequest.prototype.send = function(){ \
-        #                                     for( i = 0; i < XMLHttpRequest.callbacks.length; i++ ){ \
-        #                                         XMLHttpRequest.callbacks[i]( this ); \
-        #                                         } \
-        #                                     oldSend.apply(this, arguments); \
-        #                                     } \
-        #                                 } \
-        #                             } \
-        #                             addXMLRequestCallback(function (xhr){ \
-        #                                 setTimeout(function(){console.info(xhr.responseURL)}, 3000);}) \
-        #                             ')
-        # self.browser.implicitly_wait(30)
         time.sleep(6)
     def getResponseURLMultiplePage(self, times):
         for t in range(times):
@@ -62,7 +36,7 @@ class ResponseURL():
         indicators = ["laytinmoitronglist", "trang-", "loadListNews", "page-", "page="]
         for el in logs:
             if any(x in el["message"] for x in indicators):
-                url = el["message"].split("\"")[1]
+                url = self.domain + el["message"].split("\"")[1]
                 responseURL.append(url)
 
         self.responseURLs = {self.url: list(set(responseURL))}
@@ -81,6 +55,12 @@ class Worker(threading.Thread):
             responseURL = ResponseURL(el)
             responseURL.getResponseURLMultiplePage(3)
             self.listResponseURl.append(responseURL.responseURLs)
+
+def getCategory(file_path):
+    file = open(file_path, 'r')
+    content = file.readlines()
+    content = [line.replace('\n', '') for line in content]
+    return content
 
 def scheduleThread(numThreads):
     category = getCategory('category.txt')
