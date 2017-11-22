@@ -33,7 +33,7 @@ class ResponseURL():
             self.getResponseURL()
         logs = self.browser.get_log('browser')
         responseURL = []
-        indicators = ["laytinmoitronglist", "trang-", "loadListNews", "page-", "page="]
+        indicators = ["laytinmoitronglist", "trang-", "loadListNews", "page-", "page=", "Page"]
         for el in logs:
             if any(x in el["message"] for x in indicators):
                 url = self.domain + el["message"].split("\"")[1]
