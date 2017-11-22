@@ -27,26 +27,31 @@ class ResponseURL():
         self.responseURLs = []
     def getResponseURL(self):
         self.browser.implicitly_wait(30)
+        self.browser.execute_script('$( document ).ajaxSend(function(event, jqxhr, settings) { \
+                                  console.info(settings.url) \
+                                });')
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         # self.browser.find_element_by_xpath("/html/body").send_keys(Keys.END)
-        self.browser.execute_script('function addXMLRequestCallback(callback){ \
-                                    var oldSend, i; \
-                                    if( XMLHttpRequest.callbacks ) { \
-                                        XMLHttpRequest.callbacks.push( callback ); \
-                                    } else { \
-                                        XMLHttpRequest.callbacks = [callback]; \
-                                        oldSend = XMLHttpRequest.prototype.send; \
-                                        XMLHttpRequest.prototype.send = function(){ \
-                                            for( i = 0; i < XMLHttpRequest.callbacks.length; i++ ){ \
-                                                XMLHttpRequest.callbacks[i]( this ); \
-                                            } \
-                                            oldSend.apply(this, arguments); \
-                                        } \
-                                    } \
-                                } \
-                                addXMLRequestCallback(function (xhr){ \
-                                    setTimeout(function(){console.info(xhr.responseURL)}, 3000);}) \
-                                ')
+
+        # self.browser.execute_script('function addXMLRequestCallback(callback){ \
+        #                             var oldSend, i; \
+        #                             if( XMLHttpRequest.callbacks ) { \
+        #                                 XMLHttpRequest.callbacks.push( callback ); \
+        #                             } \
+        #                             else { \
+        #                                 XMLHttpRequest.callbacks = [callback]; \
+        #                                 oldSend = XMLHttpRequest.prototype.send; \
+        #                                 XMLHttpRequest.prototype.send = function(){ \
+        #                                     for( i = 0; i < XMLHttpRequest.callbacks.length; i++ ){ \
+        #                                         XMLHttpRequest.callbacks[i]( this ); \
+        #                                         } \
+        #                                     oldSend.apply(this, arguments); \
+        #                                     } \
+        #                                 } \
+        #                             } \
+        #                             addXMLRequestCallback(function (xhr){ \
+        #                                 setTimeout(function(){console.info(xhr.responseURL)}, 3000);}) \
+        #                             ')
         # self.browser.implicitly_wait(30)
         time.sleep(6)
     def getResponseURLMultiplePage(self, times):
